@@ -1,0 +1,58 @@
+A. Objective:
+Develop a Truck Detection System that accurately identifies trucks within random vehicle images retrieved via a provided API, using machine learning and AI technologies. The system must be efficient for real-time applications, avoiding false classifications, and ensuring reliability.
+B. Scope:
+• Image Retrieval: Utilize the provided API to obtain random vehicle images for analysis.
+• Object Detection: Implement a machine learning model capable of detecting trucks, drawing
+bounding boxes, and labeling the trucks in the images.
+• Performance Evaluation: Ensure the model’s performance is satisfactory, with a focus on accuracy, speed, and reliability. The model must correctly identify trucks while avoiding false positives in images without trucks.
+• Results Presentation: Present the detection results with clear visualizations and analysis, showcasing the model's effectiveness through metrics like TP, FP, TN, FN, IOU threshold, Precision-Recall curve, and F1-confidence curve.
+C. Challenges:
+• Model Selection: Choose an appropriate model architecture that balances performance and computational efficiency for real-time use.
+• Real-World Application: Ensure the system is robust and handles variations in image quality, lighting conditions, and truck appearances, avoiding incorrect classifications.
+• Evaluation Metrics: Define and utilize metrics like IOU, AUC, and ROC curves to evaluate and optimize the model's confidence levels and performance.
+• Outcome: The final deliverable should demonstrate expertise in ML/AI technologies, focusing on creativity, strategic thinking, and the ability to tackle real-world problems while ensuring the model's speed, reliability, and accuracy in truck detection.
+D. Assumptions:
+1. Image Quality: Images from the API are clear and high-resolution, making it easier for the model to spot trucks accurately.
+API images
+2. Correct Labeling: The dataset used for training is well-labeled, ensuring that the model learns to detect trucks without errors.
+   
+  Train set images
+3. Diverse Trucks: The model is trained on a wide range of truck types and sizes, helping it accurately detect different trucks in varied conditions.
+4. Real-Time Readiness: The system’s hardware is powerful enough to support real-time detection without significant delays.
+5. Lighting & Conditions: The model can handle different lighting and environmental conditions (e.g., day/night, weather) without losing accuracy.
+6. Balanced Dataset: The training and testing datasets are balanced, so the model can distinguish between truck and non-truck images fairly.
+7. IOU Threshold: Set at 0.5, ensuring accurate bounding box overlaps (e.g., truck8.jpeg), with Python scripts visualizing performance in detailed logs.
+8. Effective Metrics: Evaluated using TP, FP, and IOU on API images, with results visualized in Jupyter/Kaggle and documented in a formal report.
+9. Stable Tools: Any external tools or libraries used are reliable and won’t cause performance issues.
+10. Open Datasets and Models: Using Kaggle and Roboflow datasets with fine-tuned YOLOv5s
+models, evaluated in Jupyter/Kaggle Notebooks.
+E. Approach:
+The initial phase of the project involved utilizing a pre-trained YOLOv5 model for truck detection. After successfully implementing this model, I conducted an in-depth exploration of the YOLO architecture, focusing on modifying parameters, adjusting weights, and fine-tuning biases to enhance the model's performance. Despite these efforts, the performance improvements were not as substantial as anticipated.
+In response, I transitioned to developing a custom object recognition pipeline. This pipeline integrates an image classifier for label identification and a regression model for determining bounding box coordinates, both implemented within a deep neural network architecture. This approach was adopted to better align the model's capabilities with the specific requirements of accurate truck detection in varied conditions.
+
+ F. Experiments:
+Trail 1: Basic YOLO model
+Description
+This code tests the YOLOv8n model's effectiveness in object detection by managing annotations, converting bounding boxes, visualizing images, updating class labels, and handling multiple datasets. The primary goal is to assess whether this model can accurately detect trucks.
+Advantages
+• Targeted Testing: The code is designed to specifically evaluate the YOLOv8n model, enabling focused assessment of its detection capabilities.
+• Automation: Streamlines annotation preparation and updates, reducing manual effort and ensuring consistency.
+• Data Flexibility: Supports multiple datasets, allowing for a comprehensive understanding of the model’s performance across various scenarios.
+Disadvantages
+• Performance Overhead: Handling and visualizing multiple datasets can be resource-intensive, potentially slowing down testing.
+• Rigidity in Dataset Structure: Assumes specific formats, which may require adjustments for different data structures.
+• Basic Error Handling: Lacks advanced error-handling mechanisms, which could lead to issues with unexpected data formats.
+Performance Summary
+The model struggles significantly in detecting trucks, failing to draw bounding boxes or accurately identify them. This could be due to the model not being trained on relevant classes, high detection thresholds, or incorrect configurations. Addressing these issues through retraining, threshold adjustments, and configuration checks is essential for improving performance.
+Link to code: https://github.com/minnu351/Truck-Detection-/blob/ 1a810ee68eea1663449dd545597009fbbbe9e1a8/Object_Detection_PrimitiveYolo.ipynb
+YOLOv5s architecture implementation:
+This project involved developing a custom YOLOv5s model with an integrated TransformerBlock to enhance feature extraction for precise truck detection among various vehicles. The model was trained on a balanced dataset using custom class weights, with hyperparameters fine-tuned for optimal performance. Enhanced loss functions and targeted data augmentation techniques were applied to improve accuracy and robustness. The goal was to achieve reliable, real-time truck detection with minimal false classifications, making the model suitable for practical deployment in real-world scenarios.
+Link to code: https://github.com/minnu351/Truck-Detection-/blob/ 34013f477182ebde5f00d99ab1ab18481453fd91/Final_Truck_Detection.ipynb
+Model Performance analysis:
+• Model Performance Overview: The truck detection model shows mixed performance across different metrics. Out of 30 test images containing trucks, the model correctly identified 11 trucks, reflecting a Recall (R) of 0.367. This indicates that approximately 19 trucks were either not detected or misclassified. Precision, which measures the accuracy of the detected trucks, was 0.532, meaning that around 53.2% of the detections were correct, while 47.8% were false positives, where non-trucks were incorrectly identified as trucks.
+• F1-Confidence Curve Analysis: The F1-Confidence Curve provides a comprehensive view of the model's balance between precision and recall at varying confidence thresholds. The F1 score, representing the harmonic mean of precision and recall, peaks around a confidence threshold of 0.2 for both the "Other Vehicle" and "Truck" classes. The "Other Vehicle" class achieves a higher peak F1 score compared to the "Truck" class, indicating that the model is more effective at detecting other vehicles than trucks.
+• Precision-Recall Curve Insights: The Precision-Recall (PR) Curve demonstrates the trade-off between precision and recall across different thresholds. The "Other Vehicle" class reaches a precision of 0.400, while the "Truck" class achieves a precision of 0.375. As precision increases, recall for both classes drops significantly, suggesting that efforts to improve precision result in more missed trucks (lower recall). The mAP@0.5 for all classes stands at 0.388, reflecting moderate overall performance, with a particular need for improvement in recall for the "Truck" class.
+• Confusion Matrix Evaluation: The Confusion Matrix offers a detailed visual representation of the model's classification performance. The model accurately identifies 0.42 of "Other Vehicle" images but mistakenly classifies 0.12 of these images as "Truck." For the "Truck" class, it correctly identifies 0.19 of the images but incorrectly labels 0.69 of the truck images as "Other Vehicle." This high misclassification rate underscores the model's difficulty in distinguishing trucks from other vehicles, leading to low recall for the "Truck" class.
+• Overall Model Strengths and Weaknesses: The model demonstrates relative strength in detecting and classifying "Other Vehicles," as shown by the F1 and PR curves at certain confidence thresholds. However, it struggles with truck detection, as evidenced by the confusion matrix and lower recall values for the "Truck" class. The significant rate of truck misclassification indicates that the model requires further tuning or additional data to enhance its ability to differentiate trucks from other vehicles.
+• Summary of Truck Detection: In the context of truck detection, the model successfully identified 11 trucks but also produced approximately 10 false positives. Additionally, 19 out of 30 trucks were missed by the model.
+• Defining Success for the Model: The model's success can be defined by its ability to achieve a high F1 score for both classes at an optimal confidence threshold, with balanced precision and recall. A model that meets these criteria would be considered successful in its performance.
